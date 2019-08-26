@@ -1,0 +1,25 @@
+.vending-machine {
+    display: flex;
+}
+
+.menu-options {
+    display: flex;
+    flex-direction: column;
+    background: rgba(0,0,0,.1);
+}
+
+.left-panel {
+    width: 30vw;
+}
+
+.purchased-flavors {
+    width: 30vw;
+    background-color: #282c34;
+    opacity: .9;
+	display: block;
+}
+
+.purchased-button {
+	width: 30vw;
+	background-color: #282c34;
+}

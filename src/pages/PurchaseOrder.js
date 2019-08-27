@@ -3,6 +3,7 @@ import"./ShavedIce.css"
 import logo from "../logo.svg";
 import _ from 'lodash';
 import { connect } from "react-redux";
+import actions from '../modules/actions';
 import {
   withStyles,
   Button
@@ -13,17 +14,19 @@ const styles = theme => ({
   }
 });
 
-const color1 = 'red';
-const color2 = 'green';
-
-
 class PurchaseOrder extends Component {
+	
+	purchaseComplete = () => {
+		this.props.completePurchase();
+		this.props.orderCompleted();
+	}
 	
 	generateListOfSnoCones = () => {
 		return this.props.items.map(item => (
 			<div key={Math.random()}>
-				<img  src={logo} style={{background: `linear-gradient(90deg, ${color1} 50%, ${color2} 50%)`}} alt='' />
+				<img  src={logo} style={{background: `linear-gradient(90deg, ${_.head(item.colors)} 50%, ${_.last(item.colors)} 50%)`}} alt='' />
 				<div>{item.description}</div>
+				<div style={{wordWrap: 'normal', lineHeight: '1.5'}}>{item.flavors.join()}</div>
 			</div>
 		));
 	}
@@ -47,7 +50,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-
+	completePurchase: () => dispatch(actions.completePurchase())
 });
 
 export default connect(

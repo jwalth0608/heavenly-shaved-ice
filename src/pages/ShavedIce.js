@@ -42,10 +42,17 @@ const CompleteButton = withStyles(theme => ({
  * */
 
 class ShavedIce extends Component {
-    state = { purchasedFlavors: [], name:'', completeOrder: false };
+    state = { 
+		purchasedFlavors: [], 
+		name:'',
+		colors: [],
+		completeOrder: false,
+		secondFlavor: false
+		};
 
     getPurchasedFlavors = () => {
-        return <img key={Math.random()} src={logo} style={{background: this.getFlavorColor(this.state.purchasedFlavors)}} />
+		
+        return <img key={Math.random()} src={logo} style={{background: `linear-gradient(90deg, ${_.head(this.state.colors)} 50%, ${_.last(this.state.colors)} 50%)`}} />
     }
 
     getColorFromFlavors = (flavors) => {
@@ -70,12 +77,37 @@ class ShavedIce extends Component {
     };
 
     orderShavedIce = (item) => {
-        this.setState({ purchasedFlavors: item.flavors, name: item.name})
+		let { purchasedFlavors, name, colors } = this.state;
+		let flavors;
+		let shavedIceName;
+		if (this.state.secondFlavor) {
+			colors.splice(1, 1, this.getFlavorColor(item.flavors));
+			shavedIceName = name.indexOf('|') > -1 ? name.substring(0, name.indexOf('|')) : name;
+			shavedIceName = `${shavedIceName} | ${item.name}`;
+			if (typeof(_.last(purchasedFlavors)) === 'object') purchasedFlavors.pop();
+			purchasedFlavors.push(item.flavors);
+		} else {
+			colors = [this.getFlavorColor(item.flavors)];
+			shavedIceName = item.name;
+			purchasedFlavors = item.flavors;
+		}
+
+        this.setState({ purchasedFlavors, name: shavedIceName, colors})
     }
 	
 	addToOrder = () => {
-		this.props.createItem(this.state.name);
-		this.setState({ purchasedFlavors: [], name: '', colors: []});
+		const { name, purchasedFlavors, colors } = this.state;
+		const payload = {
+			name,
+			purchasedFlavors,
+			colors
+		};
+		this.props.createItem(payload);
+		this.setState({ purchasedFlavors: [], name: '', colors: [], secondFlavor: false});
+	}
+
+	getSecondFlavor = () => {
+		this.setState({secondFlavor: true});
 	}
 	
 	goToPurchaseOrder = () => {
@@ -83,7 +115,13 @@ class ShavedIce extends Component {
 	}
 	
 	 orderCompleted = () => {
-		 this.setState({completeOrder: false});
+		 this.setState({
+		 purchasedFlavors: [], 
+		name:'',
+		colors: [],
+		completeOrder: false,
+		secondFlavor: false
+		});
 	 }
 	
     render() {
@@ -100,7 +138,7 @@ class ShavedIce extends Component {
                     <div className="right-menu">
                         <div className="menu-options">
                             {!this.state.completeOrder && this.getMenuOptions()}
-							{this.state.completeOrder && <PurchaseOrder/>}
+							{this.state.completeOrder && <PurchaseOrder orderCompleted={this.orderCompleted}/>}
                         </div>
                     </div>
                     <div className="purchased-flavors">
@@ -108,7 +146,7 @@ class ShavedIce extends Component {
 						<div>
 						{this.getPurchasedFlavors()}
 						<ColorButton className='purchased-button' key='Add' onClick={this.addToOrder}>Add To Order</ColorButton>
-						<SecondFlavorButton className='purchased-button' key='Second' onClick={this.addToOrder}>Add Another Flavor</SecondFlavorButton>
+							{!this.state.secondFlavor && <SecondFlavorButton className='purchased-button' key='Second' onClick={this.getSecondFlavor}>Add Another Flavor</SecondFlavorButton>}
 						</div>}
 						{!_.isEmpty(this.props.items) && !this.state.completeOrder && <CompleteButton className='purchased-button' key='Complete' onClick={this.goToPurchaseOrder}>Pay for Order</CompleteButton>}
                     </div>

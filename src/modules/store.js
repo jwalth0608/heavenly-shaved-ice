@@ -7,18 +7,18 @@ import reducer from "./reducer";
 
 export default function configureStore(initialState = {
     shavedIceOptions: [
-		{name: "Tiger's Blood", flavors: ['Watermelon', 'Strawberry', 'Coconut'], color: ''}, 
-		{name: "Strawberry Cheesecake", flavors: ['Strawberry', 'Strawberry', 'Vanilla', 'Lime'], color: ''}, 
-		{name: "Pink Lemonade", flavors: ['Raspberry', 'Raspberry', 'Lemon', 'Lemon'], color: ''}, 
-		{name: "Red Velvet", flavors: ['Cherry', 'Cherry', 'Raspberry', 'Raspberry', 'Vanilla'], color: ''},
-		{name: 'Watermelon', flavors: ['Watermelon'], color: '#D6297B'}, 
-		{name: 'Strawberry', flavors: ['Strawberry'], color: '#D6292F'},
-		{name: 'Coconut', flavors: ['Coconut'], color: '#F8F7DC'},
-		{name: 'Vanilla', flavors: ['Vanilla'], color: '#D1BEA8'},
-		{name: 'Lime', flavors: ['Lime'], color: '#BFFF00'},
-		{name: 'Raspberry', flavors: ['Raspberry'], color: '#0066FF'},
-		{name: 'Lemon', flavors: ['Lemon'], color: '#651A14'},
-		{name: 'Cherry', flavors: ['Cherry'], color: '#FDE910'}
+		{name: "Tiger's Blood", flavors: ['Watermelon', 'Strawberry', 'Coconut']}, 
+		{name: "Strawberry Cheesecake", flavors: ['Strawberry', 'Strawberry', 'Vanilla', 'Lime']}, 
+		{name: "Pink Lemonade", flavors: ['Raspberry', 'Raspberry', 'Lemon', 'Lemon']}, 
+		{name: "Red Velvet", flavors: ['Cherry', 'Cherry', 'Raspberry', 'Raspberry', 'Vanilla']},
+		{name: 'Watermelon', flavors: ['Watermelon']}, 
+		{name: 'Strawberry', flavors: ['Strawberry']},
+		{name: 'Coconut', flavors: ['Coconut']},
+		{name: 'Vanilla', flavors: ['Vanilla']},
+		{name: 'Lime', flavors: ['Lime']},
+		{name: 'Raspberry', flavors: ['Raspberry']},
+		{name: 'Lemon', flavors: ['Lemon']},
+		{name: 'Cherry', flavors: ['Cherry']}
 	],
 	flavorColorKey: {
 		Watermelon: '#D6297B',
